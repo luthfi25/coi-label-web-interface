@@ -81,6 +81,28 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div th:if="${sentencePage.totalPages != 1}" class="form-group col-md-11 pagination-centered">
+                <ul class="pagination">
+                    <li th:class="${sentencePage.number == 0} ? disabled">
+                        <a class="pageLink" th:href="@{/admin/home(page=1)}">&laquo;</a>
+                    </li>
+                    <li th:class="${sentencePage.number == 0} ? disabled">
+                        <a class="pageLink" th:href="@{/admin/home(page=${sentencePage.number})}">&larr;</a>
+                    </li>
+                    <li th:class="${sentencePage.number == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                        <a class="pageLink" th:href="@{/admin/home(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:class="${sentencePage.number + 1 == sentencePage.totalPages} ? disabled">
+                        <a class="pageLink" th:href="@{/admin/home(page=${sentencePage.number + 2})}">&rarr;</a>
+                    </li>
+                    <li th:class="${sentencePage.number + 1 == sentencePage.totalPages} ? disabled">
+                        <a class="pageLink" th:href="@{/admin/home(page=${sentencePage.totalPages})}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script>

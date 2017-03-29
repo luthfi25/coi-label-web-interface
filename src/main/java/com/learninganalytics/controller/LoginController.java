@@ -1,5 +1,6 @@
 package com.learninganalytics.controller;
 
+import com.learninganalytics.domain.Pager;
 import com.learninganalytics.model.LabelSentence;
 import com.learninganalytics.model.Rater;
 import com.learninganalytics.model.Sentence;
@@ -7,6 +8,9 @@ import com.learninganalytics.service.LabelSentenceService;
 import com.learninganalytics.service.RaterService;
 import com.learninganalytics.service.SentenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,14 +83,16 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(){
+    public ModelAndView home(@PageableDefault(value = 15) Pageable pageable){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Rater rater = raterService.findRater(auth.getName());
         modelAndView.addObject("id", "Welcome " + rater.getId());
         modelAndView.addObject("adminMessage", "Content Available Only for Raters with Admin Role");
 
-        List<Sentence> sentences = sentenceService.findAllSentence().subList(0,19);
+        Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable);
+        List<Sentence> sentences = sentencePage.getContent();
+        Pager pager = new Pager(sentencePage.getTotalPages(), sentencePage.getNumber(), 5);
         List<LabelSentence> labelSentence = labelSentenceService.findLabelSentencebyIdRater(rater.getId());
         HashMap<Sentence, LabelSentence> sentenceToLabel = new HashMap<>();
 
@@ -103,6 +109,8 @@ public class LoginController {
         modelAndView.addObject("label", sentenceToLabel);
         modelAndView.addObject("rater", rater);
         modelAndView.addObject("labelSentence", new LabelSentence());
+        modelAndView.addObject("sentencePage", sentencePage);
+        modelAndView.addObject("pager", pager);
 
         modelAndView.setViewName("/admin/home");
         return modelAndView;

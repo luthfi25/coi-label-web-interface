@@ -4,6 +4,8 @@ import com.learninganalytics.model.Sentence;
 import com.learninganalytics.model.SentencePK;
 import com.learninganalytics.repository.SentenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,5 +27,10 @@ public class SentenceServiceImpl implements SentenceService{
     @Override
     public Sentence findSentence(SentencePK id) {
         return sentenceRepository.findOne(id);
+    }
+
+    @Override
+    public Page<Sentence> findPaginateSentence(Pageable pageable) {
+        return sentenceRepository.findAll(pageable);
     }
 }

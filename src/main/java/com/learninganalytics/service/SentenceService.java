@@ -2,6 +2,8 @@ package com.learninganalytics.service;
 
 import com.learninganalytics.model.Sentence;
 import com.learninganalytics.model.SentencePK;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,4 +13,5 @@ import java.util.List;
 public interface SentenceService {
     public List<Sentence> findAllSentence();
     public Sentence findSentence(SentencePK id);
+    public Page<Sentence> findPaginateSentence(Pageable pageable);
 }
