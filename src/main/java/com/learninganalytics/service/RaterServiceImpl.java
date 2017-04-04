@@ -30,7 +30,7 @@ public class RaterServiceImpl implements RaterService{
     @Override
     public void saveRater(Rater rater) {
         rater.setPassword(bCryptPasswordEncoder.encode(rater.getPassword()));
-        RaterType raterType = raterTypeRepository.findByRole("Admin");
+        RaterType raterType = raterTypeRepository.findByRole("Human");
         rater.setType(raterType);
         raterRepository.save(rater);
     }

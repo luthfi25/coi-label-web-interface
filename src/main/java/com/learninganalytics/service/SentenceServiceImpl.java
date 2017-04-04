@@ -31,6 +31,6 @@ public class SentenceServiceImpl implements SentenceService{
 
     @Override
     public Page<Sentence> findPaginateSentence(Pageable pageable) {
-        return sentenceRepository.findAll(pageable);
+        return sentenceRepository.findAllSentenceSorted(pageable);
     }
 }

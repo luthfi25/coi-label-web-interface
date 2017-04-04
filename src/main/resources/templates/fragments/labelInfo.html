@@ -4,13 +4,13 @@
 </head>
 <body>
     <div th:fragment="info">
-        <div class="text-center well" th:if="${label.get(sentence)}">
+        <div class="box2 text-center well" th:if="${label.get(sentence)}">
             <h5 th:text="'Labeled by you (' + ${rater.id} + ')'">Label</h5>
             <label class="checkbox-inline"><input type="checkbox" th:checked="${label.get(sentence).SP}" disabled>SP</label>
             <label class="checkbox-inline"><input type="checkbox" th:checked="${label.get(sentence).TP}" disabled>TP</label>
             <label class="checkbox-inline"><input type="checkbox" th:checked="${label.get(sentence).CP}" disabled>CP</label>
         </div>
-        <div class="text-center alert alert-danger" th:unless="${label.get(sentence)}">
+        <div class="box2 text-center alert alert-danger" th:unless="${label.get(sentence)}">
             <h5>Not Labeled Yet</h5>
             <br/><br/>
         </div>

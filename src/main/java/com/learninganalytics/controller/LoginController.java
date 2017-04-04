@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +46,7 @@ public class LoginController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
 
             /* The user is logged in :) */
-            return new ModelAndView("redirect:/admin/home");
+            return new ModelAndView("redirect:/home");
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -82,12 +81,11 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home(@PageableDefault(value = 15) Pageable pageable){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Rater rater = raterService.findRater(auth.getName());
-        modelAndView.addObject("id", "Welcome " + rater.getId());
         modelAndView.addObject("adminMessage", "Content Available Only for Raters with Admin Role");
 
         Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable);
@@ -112,7 +110,7 @@ public class LoginController {
         modelAndView.addObject("sentencePage", sentencePage);
         modelAndView.addObject("pager", pager);
 
-        modelAndView.setViewName("/admin/home");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 }

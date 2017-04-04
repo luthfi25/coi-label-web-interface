@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<nav th:fragment="header" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                COI Label Web Interface
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" th:if="${rater.type.role == 'Admin'}">
+                <li><a href="#">designs</a></li>
+                <li><a href="#">designers</a></li>
+                <li><a href="#">buy</a></li>
+                <li><a href="#">about</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div class="btn-nav">
+                        <a class="btn btn-danger btn-small navbar-btn" href="/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+<footer th:fragment="footer" class="footer">
+    <div class="container">
+        <p class="text-muted text-center">&copy; Learning Analytics 2017 | Muhammad Luthfi</p>
+    </div>
+</footer>
+</body>
+</html>
