@@ -15,5 +15,28 @@
             <br/><br/>
         </div>
     </div>
+    <div th:fragment="view-info">
+        <div th:if="${not #lists.isEmpty(sentence.labelSentence)}">
+            <div class="text-center well" th:each="ls : ${sentence.labelSentence}">
+                <h5 th:text="${ls.id_rater}">Label</h5>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${ls.SP}" disabled>SP</label>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${ls.TP}" disabled>TP</label>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${ls.CP}" disabled>CP</label>
+            </div>
+        </div>
+        <div class="text-center alert alert-danger" th:if="${#lists.isEmpty(sentence.labelSentence)}">
+            <h5>Not Labeled Yet</h5>
+        </div>
+    </div>
+    <div th:fragment="view-info-panel">
+        <div th:if="${not #lists.isEmpty(sentence.labelSentence)}">
+            <div class="text-center well">
+                <h5>Labeled by <span style="font-weight:bold" th:each="ls, iter : ${sentence.labelSentence}"><span th:text="!${iter.last} ? ${ls.id_rater} + ', ': ${ls.id_rater}"></span></span></h5>
+            </div>
+        </div>
+        <div class="text-center alert alert-danger" th:if="${#lists.isEmpty(sentence.labelSentence)}">
+            <h5>Not Labeled Yet</h5>
+        </div>
+    </div>
 </body>
 </html>

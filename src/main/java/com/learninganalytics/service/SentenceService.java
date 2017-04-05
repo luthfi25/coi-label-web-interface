@@ -13,5 +13,5 @@ import java.util.List;
 public interface SentenceService {
     public List<Sentence> findAllSentence();
     public Sentence findSentence(SentencePK id);
-    public Page<Sentence> findPaginateSentence(Pageable pageable);
+    public Page<Sentence> findPaginateSentence(Pageable pageable, boolean view);
 }

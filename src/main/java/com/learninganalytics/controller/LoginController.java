@@ -86,9 +86,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Rater rater = raterService.findRater(auth.getName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Raters with Admin Role");
-
-        Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable);
+        Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable, false);
         List<Sentence> sentences = sentencePage.getContent();
         Pager pager = new Pager(sentencePage.getTotalPages(), sentencePage.getNumber(), 5);
         List<LabelSentence> labelSentence = labelSentenceService.findLabelSentencebyIdRater(rater.getId());

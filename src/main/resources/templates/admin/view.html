@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/css/bootstrap-modal-bs3patch.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/css/bootstrap-modal.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stickyFooter.css}" />
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <nav th:replace="fragments/complement :: header"></nav>
+    <div class="alert alert-success">
+        <h3 th:text="'Welcome ' + ${rater.id} + '! Your role is ' + ${rater.type.role} + ' rater.'">Welcome</h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-4" th:each="sentence,iter : ${sentences}">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height: 40px;padding:10px">
+                    <span class="panel-title text-left pull-left"  th:text="'Post#: ' + ${sentence.post_id}">Post Id</span>
+                    <span class="text-right pull-right" th:text="'Sentence#: ' + ${sentence.sentence_id}">Sentence Id</span>
+                </div>
+                <div class="box">
+                    <div class="panel-body" th:text="${sentence.sentence}">Sentence</div>
+                </div>
+                <div th:replace="fragments/labelInfo :: view-info-panel"></div>
+                <div class="text-center"><button class="demo btn btn-primary btn-sm" data-toggle="modal" th:href="'#post' + ${sentence.post_id} + 'sentence' + ${sentence.sentence_id}">Details</button></div>
+                <br/>
+            </div>
+            <div th:id="'post' + ${sentence.post_id} + 'sentence' + ${sentence.sentence_id}" class="modal container fade" tabindex="-1" style="display: none;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" th:text="'post#: ' + ${sentence.post_id}">Title</h4>
+                    <h5 class="modal-title" th:text="'sentence#: ' + ${sentence.sentence_id}">Title</h5>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p th:text="${sentence.sentence}" style="text-align: justify;">This modal will resize itself to the same dimensions as the container class.</p>
+                    </div>
+                    <div th:replace="fragments/labelInfo :: view-info">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-prev">Prev</button>
+                    <button type="button" class="btn btn-success btn-next">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div th:if="${sentencePage.totalPages != 1}" class="form-group col-md-12 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${sentencePage.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/admin/view(page=0)}">&laquo;</a>
+                </li>
+                <li th:class="${sentencePage.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/admin/view(page=${sentencePage.number - 1})}">&larr;</a>
+                </li>
+                <li th:class="${sentencePage.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{/admin/view(page=${page-1})}" th:text="${page}"></a>
+                </li>
+                <li th:class="${sentencePage.number + 1 == sentencePage.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{/admin/view(page=${sentencePage.number + 1})}">&rarr;</a>
+                </li>
+                <li th:class="${sentencePage.number + 1 == sentencePage.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{/admin/view(page=${sentencePage.totalPages - 1})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        // get current URL path and assign 'active' class
+        var pathname = window.location.pathname;
+        $('.nav > li > a[href="'+pathname+'"]').parent().addClass('active');
+        $('.box').matchHeight(false);
+        $('.box2').matchHeight(false);
+
+        $("div[id^='post']").each(function(index, el){
+
+          var currentModal = $(this);
+
+          //click next
+          currentModal.find('.btn-next').click(function(){
+            currentModal.modal('hide');
+
+            if(index+1 < $("div[id^='post']").length){
+              $("div[id^='post']").eq(index).modal('show');
+            }
+
+            console.log(index + " " + $("div[id^='post']").length);
+          });
+
+          //click prev
+          currentModal.find('.btn-prev').click(function(){
+            currentModal.modal('hide');
+
+            if(index - 1 >= 0){
+                $("div[id^='post']").eq(index-1).modal('show');
+            }
+          });
+
+        });
+    })
+</script>
+</body>
+</html>
