@@ -11,8 +11,9 @@
             </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav" th:if="${rater.type.role == 'Admin'}">
+            <ul class="nav navbar-nav" th:if="${rater.raterType.role == 'Admin'}">
                 <li><a href="/admin/view">View Mode</a></li>
+                <li><a href="/admin/manage-rater">Manage Rater</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

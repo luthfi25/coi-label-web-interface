@@ -1,9 +1,7 @@
 package com.learninganalytics.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Luthfi on 17/03/2017.
@@ -17,6 +15,8 @@ public class RaterType {
     private int id;
     @Column(name = "role")
     private String role;
+    @OneToMany(mappedBy = "raterType")
+    private List<Rater> raterList;
 
     public int getId() {
         return id;

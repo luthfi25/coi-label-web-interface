@@ -86,7 +86,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Rater rater = raterService.findRater(auth.getName());
-        Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable, false);
+        Page<Sentence> sentencePage = sentenceService.findPaginateSentence(pageable);
         List<Sentence> sentences = sentencePage.getContent();
         Pager pager = new Pager(sentencePage.getTotalPages(), sentencePage.getNumber(), 5);
         List<LabelSentence> labelSentence = labelSentenceService.findLabelSentencebyIdRater(rater.getId());
@@ -97,7 +97,9 @@ public class LoginController {
 
             if (ls.size() > 0){
                 List<LabelSentence> new_ls = ls.stream().filter(label -> labelSentence.contains(label)).collect(Collectors.toList());
-                sentenceToLabel.put(s, new_ls.get(0));
+                if(new_ls.size() > 0){
+                    sentenceToLabel.put(s, new_ls.get(0));
+                }
             }
         }
 

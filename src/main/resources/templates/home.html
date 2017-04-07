@@ -18,7 +18,7 @@
     <div class="container">
         <nav th:replace="fragments/complement :: header"></nav>
         <div class="alert alert-success">
-            <h3 th:text="'Welcome ' + ${rater.id} + '! Your role is ' + ${rater.type.role} + ' rater.'">Welcome</h3>
+            <h3 th:text="'Welcome ' + ${rater.id} + '! Your role is ' + ${rater.raterType.role} + ' rater.'">Welcome</h3>
         </div>
         <div class="row">
             <div class="col-sm-4" th:each="sentence,iter : ${sentences}">
@@ -142,7 +142,7 @@
                 // Serialize the data in the form
                 var JSONed = $form.serializeJSON();
                 var serializedData = JSON.stringify(JSONed);
-                console.log(serializedData);
+
                 // Let's disable the inputs for the duration of the Ajax request.
                 // Note: we disable elements AFTER the form data has been serialized.
                 // Disabled form elements will not be serialized.
@@ -163,7 +163,6 @@
                 request.done(function (response, textStatus, jqXHR){
                     // Log a message to the console
                     var infoId = "#".concat(JSONed.labelInfoId);
-                    console.log(infoId);
                     $(infoId).html(response);
                 });
 

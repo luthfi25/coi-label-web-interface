@@ -14,4 +14,5 @@ public interface LabelSentenceService {
     public LabelSentence findLabelSentence(LabelSentencePK id);
     public List<LabelSentence> findLabelSentencebyIdRater(String id_rater);
     public void saveLabelSentence(LabelSentence labelSentence);
+    public void deleteLabelSentence(LabelSentence labelSentence);
 }

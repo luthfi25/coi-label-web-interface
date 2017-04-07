@@ -16,6 +16,7 @@
         </div>
     </div>
     <div th:fragment="view-info">
+        <h4 class="text-center">Sentence Label</h4>
         <div th:if="${not #lists.isEmpty(sentence.labelSentence)}">
             <div class="text-center well" th:each="ls : ${sentence.labelSentence}">
                 <h5 th:text="${ls.id_rater}">Label</h5>
@@ -25,7 +26,19 @@
             </div>
         </div>
         <div class="text-center alert alert-danger" th:if="${#lists.isEmpty(sentence.labelSentence)}">
-            <h5>Not Labeled Yet</h5>
+            <h5>The Sentence is not labeled yet</h5>
+        </div>
+        <h4 class="text-center">Post Label</h4>
+        <div th:if="${postLabel.get(sentence)}">
+            <div class="text-center alert alert-success" th:each="lp : ${postLabel.get(sentence)}">
+                <h5 th:text="${lp.id_rater}">Label</h5>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${lp.SP}" disabled>SP</label>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${lp.TP}" disabled>TP</label>
+                <label class="checkbox-inline"><input type="checkbox" th:checked="${lp.CP}" disabled>CP</label>
+            </div>
+        </div>
+        <div class="text-center alert alert-danger" th:unless="${postLabel.get(sentence)}">
+            <h5>The Post is not labeled yet</h5>
         </div>
     </div>
     <div th:fragment="view-info-panel">

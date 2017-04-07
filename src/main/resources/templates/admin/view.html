@@ -18,7 +18,7 @@
 <div class="container">
     <nav th:replace="fragments/complement :: header"></nav>
     <div class="alert alert-success">
-        <h3 th:text="'Welcome ' + ${rater.id} + '! Your role is ' + ${rater.type.role} + ' rater.'">Welcome</h3>
+        <h3 th:text="'Welcome ' + ${rater.id} + '! Your role is ' + ${rater.raterType.role} + ' rater.'">Welcome</h3>
     </div>
     <div class="row">
         <div class="col-sm-4" th:each="sentence,iter : ${sentences}">
@@ -77,6 +77,7 @@
         </div>
     </div>
 </div>
+<footer th:replace="fragments/complement :: footer"></footer>
 <script>
     $(document).ready(function() {
         // get current URL path and assign 'active' class

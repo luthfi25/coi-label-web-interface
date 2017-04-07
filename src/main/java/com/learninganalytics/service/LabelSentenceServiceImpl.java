@@ -35,4 +35,9 @@ public class LabelSentenceServiceImpl implements LabelSentenceService {
     public void saveLabelSentence(LabelSentence labelSentence) {
         labelSentenceRepository.save(labelSentence);
     }
+
+    @Override
+    public void deleteLabelSentence(LabelSentence labelSentence) {
+        labelSentenceRepository.delete(new LabelSentencePK(labelSentence.getId_rater(), labelSentence.getId_post(), labelSentence.getId_sentence()));
+    }
 }
