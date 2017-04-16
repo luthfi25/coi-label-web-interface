@@ -1,0 +1,9 @@
+syntax: glob
+target
+*.swp
+.settings
+output
+*.log
+*.class
+.git
+.idea
