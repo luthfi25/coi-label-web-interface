@@ -64,7 +64,24 @@
                                 <input type="hidden" name="id_post" th:value="${sentence.post_id}">
                                 <input type="hidden" name="id_sentence" th:value="${sentence.sentence_id}">
                                 <input type="hidden" name="labelInfoId" th:value="'labelInfo' + ${sentence.post_id} + '-' + ${sentence.sentence_id}">
-                            </form>
+                            </form><hr/>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <small>
+                                        <strong>Social Presence</strong><br/>menandakan adanya interaksi sosial.<br/>Contoh:<br/>Mohon maaf sebelumnya...<br/>Terima kasih teman-teman...<br/>Saya tidak setuju dengan...
+                                    </small>
+                                </div>
+                                <div class="col-lg-4">
+                                    <small>
+                                        <strong>Teaching Presence</strong><br/>menandakan adanya peran fasilitator.<br/>Contoh<br/>Coba kita diskusikan mengenai...<br/>Bagaimana menurut pendapat teman-teman jika...<br/>Mohon dikoreksi jika ada yang salah...
+                                    </small>
+                                </div>
+                                <div class="col-lg-4">
+                                    <small>
+                                        <strong>Cognitive Presence</strong><br/>menandakan adanya proses kognitif.<br/>Contoh:<br/>Saya bingung dengan...<br/>Menurut saya kesalahannya adalah...<br/>Kesimpulan yang bisa kita ambil...
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
