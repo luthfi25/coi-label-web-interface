@@ -11,9 +11,10 @@
             </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav" th:if="${rater.raterType.role == 'Admin'}">
-                <li><a href="/admin/view">View Mode</a></li>
-                <li><a href="/admin/manage-rater">Manage Rater</a></li>
+            <ul class="nav navbar-nav">
+                <li th:if="${rater.raterType.role == 'Admin'}"><a href="/admin/view">View Mode</a></li>
+                <li th:if="${rater.raterType.role == 'Admin'}"><a href="/admin/manage-rater">Manage Rater</a></li>
+                <li><a href="/home/predict">Predict CoI Element</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -30,5 +31,16 @@
         <p class="text-muted text-center">&copy; Learning Analytics 2017 | Muhammad Luthfi</p>
     </div>
 </footer>
+<div th:fragment="predict">
+    <span th:each="s,iter : ${sentences}">
+        <span th:if="${prediction[iter.index] == 4}" th:text="${s}" style="background:yellow;"></span>
+        <span th:if="${prediction[iter.index] == 2}" th:text="${s}" style="background:aqua;"></span>
+        <span th:if="${prediction[iter.index] == 1}" th:text="${s}" style="background:tomato;"></span>
+        <span th:if="${prediction[iter.index] == 6}" th:text="${s}" style="background:lightgreen;"></span>
+        <span th:if="${prediction[iter.index] == 3}" th:text="${s}" style="background:thistle;"></span>
+        <span th:if="${prediction[iter.index] == 5}" th:text="${s}" style="background:orchid;"></span>
+        <span th:if="${prediction[iter.index] == 7}" th:text="${s}" style="background:pink;"></span>
+    </span>
+</div>
 </body>
 </html>
