@@ -19,7 +19,23 @@
         .table-nonfluid {
            width: auto !important;
         }
+
         .top-buffer { margin-top:40px; }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            margin-top:20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -29,9 +45,14 @@
             <div class="col-lg-5">
                 <textarea cols="60" rows="5" form="predict" name="document" placeholder="Place document here.."></textarea>
             </div>
-            <div class="col-lg-2"><center><form id="predict">
-                    <button type="submit" class="btn btn-default">Predict!</button>
-            </form></center></div>
+            <div class="col-lg-2">
+                <center>
+                    <form id="predict">
+                        <button type="submit" class="btn btn-default">Predict!</button>
+                    </form>
+                    <div id="loading"></div>
+                </center>
+            </div>
             <div id="hasil" class="col-lg-5 well well-lg">Result should appear here..</div>
         </div>
         <div class="row top-buffer"><center><table class="table table-bordered table-nonfluid">
@@ -105,7 +126,7 @@
                     type: "post",
                     data: serializedData
                 });
-                console.log("done sending request");
+                $("#loading").addClass("loader");
 
                 // Callback handler that will be called on success
                 request.done(function (response, textStatus, jqXHR){
@@ -113,6 +134,7 @@
                     console.log("request success");
                     var infoId = "#hasil";
                     $(infoId).html(response);
+                    $("#loading").removeClass("loader");
                 });
 
                 // Callback handler that will be called on failure
