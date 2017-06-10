@@ -33,6 +33,7 @@
 </footer>
 <div th:fragment="predict">
     <span th:each="s,iter : ${sentences}">
+        <span th:if="${prediction[iter.index] == 0}" th:text="${s}"></span>
         <span th:if="${prediction[iter.index] == 4}" th:text="${s}" style="background:yellow;"></span>
         <span th:if="${prediction[iter.index] == 2}" th:text="${s}" style="background:aqua;"></span>
         <span th:if="${prediction[iter.index] == 1}" th:text="${s}" style="background:tomato;"></span>
